@@ -9,7 +9,7 @@ part of the eBay interview process.
 
 ### Project Technologies
 - This project is developed in [Kotlin](https://kotlinlang.org/).
-- Application Framework: [Spring Boot](https://spring.io/).
+- Application Framework: [Spring Boot](https://spring.io/projects/spring-boot).
 
 ### Build Instructions
 Gradle's build scripts make building the Shipping Eligibility service fast and simple!
