@@ -2,30 +2,29 @@ package com.shipping_eligibility
 
 import org.springframework.boot.runApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @SpringBootApplication
 @RestController
 class ShippingEligibilityApplication {
 
-	@GetMapping("/")
-	fun home(): String {
-		return "Hello World!"
-	}
+	//Note: at the moment, default endpoint ("/") is served by resources/static/index.html
+	//		>> A basic html form to send requests to /checkAccess
 
-	@GetMapping("/shipping")
-	fun shipping(@RequestParam(value="title", defaultValue="none") name: String): Boolean {
-		if (name == "none") {
-			println("GET: No name supplied")
-			return false
-		}
-		println("Title supplied: $name")
-		return true
+	//Endpoint for shipping eligibility API calls
+	@GetMapping
+	(path=["/checkAccess"], produces=["application/json"])
+	fun checkAccess(
+		@RequestParam(defaultValue="none") title: String,
+		@RequestParam(defaultValue="none") seller: String,
+		@RequestParam(defaultValue="none") category: String,
+		@RequestParam(defaultValue="none") price: Double
+		) {
+		println("/checkAccess request: ${title}, ${seller}, ${category}, ${price}")
 	}
 }
 
 fun main(args: Array<String>) {
 	runApplication<ShippingEligibilityApplication>(*args)
 }
+
