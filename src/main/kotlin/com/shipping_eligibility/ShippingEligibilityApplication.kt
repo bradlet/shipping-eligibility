@@ -12,17 +12,18 @@ class ShippingEligibilityApplication {
 	//		>> A basic html form to send requests to /checkAccess
 
 	//Endpoint for shipping eligibility API calls
-	@GetMapping
-	(path=["/checkAccess"], produces=["application/json"])
+	@GetMapping(path=["/checkAccess"], produces=["application/json"])
 	fun checkAccess(
 		@RequestParam(defaultValue="none", required=true) title: String,
 		@RequestParam(defaultValue="none", required=true) seller: String,
 		@RequestParam(defaultValue="none", required=true) category: String,
 		@RequestParam(defaultValue="none", required=true) price: Double
-		) {
+		): Boolean {
 		println("/checkAccess request received: $title, $seller, $category, $price")
 		val req = EligibilityRequest(title, seller, category, price)
 		req.validate()
+		// if good req
+		return true
 	}
 }
 

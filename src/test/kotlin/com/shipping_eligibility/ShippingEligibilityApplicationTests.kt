@@ -26,11 +26,20 @@ class ShippingEligibilityApplicationTests {
 		val result = testRestTemplate.getForEntity("/checkAccess", String::class.java)
 		Assertions.assertEquals(result.statusCode, HttpStatus.BAD_REQUEST)
 	}
+
 	@Test
 	fun blankParamsShouldThrowException() {
 		val badRequest = "?title=''&sender=''&category=''&price='-1'"
 		val result = testRestTemplate.getForEntity("/checkAccess$badRequest", String::class.java)
 		Assertions.assertEquals(result.statusCode, HttpStatus.BAD_REQUEST)
+	}
+
+	@Test
+	fun goodRequestReturnsWithoutError() {
+		val goodRequest = "?title=ExampleItem&sender=user12345&category=items&price=2.99"
+		val result = testRestTemplate.getForEntity("/checkAccess$goodRequest", String::class.java)
+		//println(result.body)
+		Assertions.assertNotNull(result.body)
 	}
 
 }
