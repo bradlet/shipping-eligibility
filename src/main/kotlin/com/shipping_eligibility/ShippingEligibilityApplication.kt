@@ -20,7 +20,9 @@ class ShippingEligibilityApplication {
 		@RequestParam(defaultValue="none") category: String,
 		@RequestParam(defaultValue="none") price: Double
 		) {
-		println("/checkAccess request: ${title}, ${seller}, ${category}, ${price}")
+		println("/checkAccess request received: $title, $seller, $category, $price")
+		val req = EligibilityRequest(title, seller, category, price)
+		req.validate()
 	}
 }
 
