@@ -15,10 +15,10 @@ class ShippingEligibilityApplication {
 	@GetMapping
 	(path=["/checkAccess"], produces=["application/json"])
 	fun checkAccess(
-		@RequestParam(defaultValue="none") title: String,
-		@RequestParam(defaultValue="none") seller: String,
-		@RequestParam(defaultValue="none") category: String,
-		@RequestParam(defaultValue="none") price: Double
+		@RequestParam(defaultValue="none", required=true) title: String,
+		@RequestParam(defaultValue="none", required=true) seller: String,
+		@RequestParam(defaultValue="none", required=true) category: String,
+		@RequestParam(defaultValue="none", required=true) price: Double
 		) {
 		println("/checkAccess request received: $title, $seller, $category, $price")
 		val req = EligibilityRequest(title, seller, category, price)

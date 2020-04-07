@@ -8,10 +8,11 @@ class EligibilityRequest(
         val category: String,
         val price: Double
 ) {
-    // Throws an exception if no params were supplied, or if a negative price was supplied.
+    // Throws an exception if params are blank, or if a negative price was supplied.
     fun validate(){
         if (title.isBlank() || (seller.isBlank()) || category.isBlank() ||
             price.isNaN() || price < 0) {
+            println("throw InvalidInputException")
             throw InvalidInputException("BAD REQUEST: $title, $seller, $category, $price")
         }
     }
