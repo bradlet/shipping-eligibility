@@ -15,12 +15,12 @@ class ShippingEligibilityApplication {
 
 	// Not secure but I don't have to spin up a database to get persistence this way.
 	// A quick temporary solution.
-	val listOfSellers: Array<String> = fileManager()
+	val listOfSellers: Array<String> = FileManager()
 			.readFile(DATAPATH+"enrolled.txt")
-	val listOfCategories: Array<Int> = fileManager()
+	val listOfCategories: Array<Int> = FileManager()
 			.readFile(DATAPATH+"approvedCategories.txt")
 			.map {it.toInt()}.toTypedArray()
-	val minPrice: Double = fileManager()
+	val minPrice: Double = FileManager()
 			.readFile(DATAPATH+"minPrice.txt")
 			.map {it.toDouble()}[0] // Treated as an array to reuse the readFile method
 
