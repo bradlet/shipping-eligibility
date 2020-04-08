@@ -19,7 +19,7 @@ Just run the following command within the working directory...
 ### Testing
 This application uses Spring Boot's built-in testing framework, JUnit5.
 Enter the following command within the working directory to run all unit tests...
-> ./gradlew clean testA
+> ./gradlew clean test
 
 ### Brief Code Overview
 Basically, this API takes in a title, seller, category and price from a
@@ -61,7 +61,7 @@ primitive design and didn't show much professional prowess. I considered
 using either a relational or non relational database, but it seemed a
 little overkill, and this use case doesn't require relational queries. 
 Just single column data storage which wastes some of the power of databases.
-- I initially wanted to implemented following the builder pattern,
+- I initially wanted to implement following the builder pattern,
 keeping an EligibilityRequest as a data class, and simply ensuring that
 any time there is a built EligibilityRequest it is in a valid state. 
 Given the size of the project, and the fact that I gravitate to the builder
