@@ -2,7 +2,6 @@ package com.shipping_eligibility
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,21 +22,21 @@ class ShippingEligibilityApplicationTests {
 
 	@Test
 	fun noParamsShouldSendErrorStatus() {
-		val result = testRestTemplate.getForEntity("/checkAccess", String::class.java)
+		val result = testRestTemplate.getForEntity(PRIMARY_ENDPOINT, String::class.java)
 		Assertions.assertEquals(result.statusCode, HttpStatus.BAD_REQUEST)
 	}
 
 	@Test
 	fun blankParamsShouldThrowException() {
 		val badRequest = "?title=''&sender=''&category=''&price='-1'"
-		val result = testRestTemplate.getForEntity("/checkAccess$badRequest", String::class.java)
+		val result = testRestTemplate.getForEntity(PRIMARY_ENDPOINT+badRequest, String::class.java)
 		Assertions.assertEquals(result.statusCode, HttpStatus.BAD_REQUEST)
 	}
 
 	@Test
 	fun goodRequestReturnsWithoutError() {
 		val goodRequest = "?title=ExampleItem&sender=user12345&category=items&price=2.99"
-		val result = testRestTemplate.getForEntity("/checkAccess$goodRequest", String::class.java)
+		val result = testRestTemplate.getForEntity(PRIMARY_ENDPOINT+goodRequest, String::class.java)
 		//println(result.body)
 		Assertions.assertNotNull(result.body)
 	}

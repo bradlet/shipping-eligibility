@@ -4,6 +4,8 @@ import org.springframework.boot.runApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.web.bind.annotation.*
 
+const val PRIMARY_ENDPOINT = "/checkAccess"
+
 @SpringBootApplication
 @RestController
 class ShippingEligibilityApplication {
@@ -12,16 +14,17 @@ class ShippingEligibilityApplication {
 	//		>> A basic html form to send requests to /checkAccess
 
 	//Endpoint for shipping eligibility API calls
-	@GetMapping(path=["/checkAccess"], produces=["application/json"])
+	@GetMapping(path=[PRIMARY_ENDPOINT], produces=["application/json"])
 	fun checkAccess(
 		@RequestParam(defaultValue="none", required=true) title: String,
 		@RequestParam(defaultValue="none", required=true) seller: String,
 		@RequestParam(defaultValue="none", required=true) category: String,
 		@RequestParam(defaultValue="none", required=true) price: Double
 		): Boolean {
-		println("/checkAccess request received: $title, $seller, $category, $price")
+		println("$PRIMARY_ENDPOINT request received: $title, $seller, $category, $price")
 		val req = EligibilityRequest(title, seller, category, price)
 		req.validate()
+
 		// if good req
 		return true
 	}
