@@ -15,15 +15,16 @@ class ShippingEligibilityApplication {
 
 	//Endpoint for shipping eligibility API calls
 	@GetMapping(path=[PRIMARY_ENDPOINT], produces=["application/json"])
-	fun checkAccess(
-		@RequestParam(defaultValue="none", required=true) title: String,
-		@RequestParam(defaultValue="none", required=true) seller: String,
-		@RequestParam(defaultValue="none", required=true) category: String,
-		@RequestParam(defaultValue="none", required=true) price: Double
-		): Boolean {
+	fun checkAccess(@RequestParam(defaultValue="none", required=true) title: String,
+					@RequestParam(defaultValue="none", required=true) seller: String,
+					@RequestParam(defaultValue="none", required=true) category: Int,
+					@RequestParam(defaultValue="none", required=true) price: Double
+	): Boolean {
 		println("$PRIMARY_ENDPOINT request received: $title, $seller, $category, $price")
 		val req = EligibilityRequest(title, seller, category, price)
 		req.validate()
+
+		//return req.checkRequest(listOfSellers, listOfCategories, minPrice)
 
 		// if good req
 		return true
