@@ -43,4 +43,9 @@ class EligibilityRequest(private val title: String, private val seller: String,
             return true
         return false
     }
+
+    // Return the string representation of this class object
+    override fun toString(): String {
+        return "[title = $title, seller = $seller, category = $category, price = $price]"
+    }
 }
