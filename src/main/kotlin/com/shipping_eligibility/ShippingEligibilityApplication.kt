@@ -2,6 +2,8 @@ package com.shipping_eligibility
 
 import org.springframework.boot.runApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 const val PRIMARY_ENDPOINT = "/checkAccess"
@@ -31,12 +33,13 @@ class ShippingEligibilityApplication {
 					@RequestParam(defaultValue="none", required=true) seller: String,
 					@RequestParam(defaultValue="none", required=true) category: Int,
 					@RequestParam(defaultValue="none", required=true) price: Double
-	): Boolean {
+	): ResponseEntity<Boolean> {
 		println("$PRIMARY_ENDPOINT request received: $title, $seller, $category, $price")
 		val req = EligibilityRequest(title, seller, category, price)
 		req.validate()
 
-		return req.checkRequest(listOfSellers, listOfCategories, minPrice)
+		return ResponseEntity(req.checkRequest(listOfSellers, listOfCategories, minPrice),
+			HttpStatus.OK)
 	}
 }
 
