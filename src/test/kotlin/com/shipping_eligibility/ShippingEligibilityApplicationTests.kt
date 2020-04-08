@@ -41,4 +41,45 @@ class ShippingEligibilityApplicationTests {
 		Assertions.assertNotNull(result.body)
 	}
 
+	@Test
+	fun checkSellerWithEnrolledSeller() {
+		val list: Array<String> = arrayOf("user1", "randomuser", "user2")
+		val req = EligibilityRequest("Example", "user1", 1, 30.01)
+		Assertions.assertEquals(true, req.checkSeller(list))
+	}
+
+	@Test
+	fun checkSellerWithUnEnrolledSeller() {
+		val list: Array<String> = arrayOf("user1", "randomuser", "user2")
+		val req = EligibilityRequest("Example", "notEnrolled", 1, 30.01)
+		Assertions.assertEquals(false, req.checkSeller(list))
+	}
+
+	@Test
+	fun checkCategoryWithApprovedCategory() {
+		val list: Array<Int> = arrayOf(1, 3, 5 ,6)
+		val req = EligibilityRequest("Example", "user1", 1, 30.01)
+		Assertions.assertEquals(true, req.checkCategory(list))
+	}
+
+	@Test
+	fun checkCategoryWithNotApprovedCategory() {
+		val list: Array<Int> = arrayOf(1, 3, 5 ,6)
+		val req = EligibilityRequest("Example", "user1", 2, 30.01)
+		Assertions.assertEquals(false, req.checkCategory(list))
+	}
+
+	@Test
+	fun checkPriceAboveMinPrice() {
+		val minPrice: Double = 10.99
+		val req = EligibilityRequest("Example", "user1", 2, 30.01)
+		Assertions.assertEquals(true, req.checkPrice(minPrice))
+	}
+
+	@Test
+	fun checkPriceBelowMinPrice() {
+		val minPrice: Double = 10.99
+		val req = EligibilityRequest("Example", "user1", 2, 2.01)
+		Assertions.assertEquals(false, req.checkPrice(minPrice))
+	}
 }
