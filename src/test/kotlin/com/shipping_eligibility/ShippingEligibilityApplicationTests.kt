@@ -42,6 +42,13 @@ class ShippingEligibilityApplicationTests {
 	}
 
 	@Test
+	fun negativeValuesThrowError() {
+		val badRequest = "?title=ExampleItem&sender=user12345&category=-2&price=-2.99"
+		val result = testRestTemplate.getForEntity(PRIMARY_ENDPOINT+badRequest, String::class.java)
+		Assertions.assertEquals(result.statusCode, HttpStatus.BAD_REQUEST)
+	}
+
+	@Test
 	fun checkSellerWithEnrolledSeller() {
 		val list: Array<String> = arrayOf("user1", "randomuser", "user2")
 		val req = EligibilityRequest("Example", "user1", 1, 30.01)
