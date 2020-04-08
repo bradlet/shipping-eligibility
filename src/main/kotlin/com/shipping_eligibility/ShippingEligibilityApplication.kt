@@ -5,10 +5,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.web.bind.annotation.*
 
 const val PRIMARY_ENDPOINT = "/checkAccess"
+const val DATAPATH = "src/main/resources/data/"
 
 @SpringBootApplication
 @RestController
 class ShippingEligibilityApplication {
+
+	// Not secure but I don't have to spin up a database to get persistence this way.
+	// A quick temporary solution.
+	val listOfSellers: Array<String> = fileManager()
+			.readFile(DATAPATH+"enrolled.txt")
+	val listOfCategories: Array<Int> = fileManager()
+			.readFile(DATAPATH+"approvedCategories.txt")
+			.map {it.toInt()}.toTypedArray()
+	val minPrice: Double = fileManager()
+			.readFile(DATAPATH+"minPrice.txt")
+			.map {it.toDouble()}[0] // Treated as an array to reuse the readFile method
 
 	//Note: at the moment, default endpoint ("/") is served by resources/static/index.html
 	//		>> A basic html form to send requests to /checkAccess
@@ -24,10 +36,7 @@ class ShippingEligibilityApplication {
 		val req = EligibilityRequest(title, seller, category, price)
 		req.validate()
 
-		//return req.checkRequest(listOfSellers, listOfCategories, minPrice)
-
-		// if good req
-		return true
+		return req.checkRequest(listOfSellers, listOfCategories, minPrice)
 	}
 }
 
