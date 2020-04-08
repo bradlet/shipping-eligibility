@@ -15,3 +15,8 @@ part of the eBay interview process.
 Gradle's build scripts make building the Shipping Eligibility service fast and simple!
 Just run the following command within the working directory...
 > ./gradlew bootRun
+
+### Testing
+This application uses Spring Boot's built-in testing framework, JUnit5.
+Enter the following command wihtin the working directory to run all unit tests...
+> ./gradlew clean test
